@@ -19,12 +19,19 @@ import {
   CardContent,
   Card,
 } from "@mui/material";
-import {db} from '../firebase.js'
-import { doc, collection, setDoc, getDoc, writeBatch } from "firebase/firestore";
-import Navbar from '../components/Navbar.js'
-
+import { db } from "../firebase.js";
+import {
+  doc,
+  collection,
+  setDoc,
+  getDoc,
+  writeBatch,
+} from "firebase/firestore";
+import { useTheme } from "@mui/material/styles";
+import Navbar from "../components/Navbar.js";
 
 export default function Generate() {
+  const theme = useTheme();
   const { isLoaded, isSignedIn, user } = useUser();
   const [flashcards, setFlashcards] = useState([]);
   const [flipped, setFlipped] = useState({});
@@ -64,7 +71,7 @@ export default function Generate() {
     const batch = writeBatch(db);
     const userDocRef = doc(collection(db, "users"), user.id);
     const docSnap = await getDoc(userDocRef);
-   
+
     if (docSnap.exists()) {
       const collections = docSnap.data().flashcards || [];
       if (collections.find((f) => f.name === name)) {
@@ -92,6 +99,9 @@ export default function Generate() {
   return (
     <Container maxWidth="md">
       <Navbar />
+      <Typography variant="h4" sx={{ textAlign: "center", mt: 8 }}>
+        Generate Flashcards
+      </Typography>
       <Box
         sx={{
           mt: 4,
@@ -101,13 +111,11 @@ export default function Generate() {
           alignItems: "center",
         }}
       >
-        <Typography variant="h4">Generate Flashcards</Typography>
-
         <Paper sx={{ p: 4, width: "100%" }}>
           <TextField
             value={text}
             onChange={(e) => setText(e.target.value)}
-            label="Enter text"
+            label="Ex: Create a deck about plants"
             fullWidth
             multiline
             rows={4}
@@ -129,8 +137,10 @@ export default function Generate() {
       </Box>
 
       {flashcards.length > 0 && (
-        <Box sx={{ mt: 4 }}>
-          <Typography variant="h5">Flashcards Preview</Typography>
+        <Box color="primary" sx={{ mt: 4 }}>
+          <Typography variant="h5" textAlign="center" m="20px">
+            Flashcards Preview
+          </Typography>
           <Grid container spacing={3}>
             {flashcards.map((flashcard, index) => (
               <Grid item sx={12} sm={6} md={4} key={index}>
@@ -157,6 +167,7 @@ export default function Generate() {
                             transform: flipped[index]
                               ? "rotateY(180deg)"
                               : "rotateY(0deg)",
+                            backgroundColor: "theme.palette.background.default",
                           }}
                         >
                           <Box
@@ -170,10 +181,14 @@ export default function Generate() {
                               alignItems: "center",
                               padding: 2,
                               boxSizing: "border-box",
-                              backgroundColor: "white",
+                              backgroundColor: "transparent",
                             }}
                           >
-                            <Typography variant="h5" component="div">
+                            <Typography
+                              variant="h5"
+                              component="div"
+                              color="white"
+                            >
                               {flashcard.front}
                             </Typography>
                           </Box>
@@ -188,11 +203,15 @@ export default function Generate() {
                               alignItems: "center",
                               padding: 2,
                               boxSizing: "border-box",
-                              backgroundColor: "white",
+                              backgroundColor: "transparent",
                               transform: "rotateY(180deg)",
                             }}
                           >
-                            <Typography variant="h5" component="div">
+                            <Typography
+                              variant="h5"
+                              component="div"
+                              color="white"
+                            >
                               {flashcard.back}
                             </Typography>
                           </Box>
@@ -211,7 +230,7 @@ export default function Generate() {
               justifyContent: "center",
             }}
           >
-            <Button variant="contained" color="secondary" onClick={handleOpen}>
+            <Button variant="contained" color="primary" onClick={handleOpen}>
               Save
             </Button>
           </Box>

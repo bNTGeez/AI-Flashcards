@@ -7,15 +7,21 @@ export default function Navbar() {
   const handleHomeClick = () => {
     router.push("/");
   };
+  const handleFlashcardsClick = () => {
+    router.push("/flashcards");
+  };
 
   return (
     <AppBar position="static">
       <Toolbar>
         <Typography variant="h6" style={{ flexGrow: 1 }}>
-          Flashcard App
+          Flashcard SaaS
         </Typography>
         <Button color="inherit" onClick={handleHomeClick}>
           Home
+        </Button>
+        <Button color="inherit" onClick={handleFlashcardsClick}>
+          Flashcards
         </Button>
       </Toolbar>
     </AppBar>

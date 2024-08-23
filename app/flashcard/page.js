@@ -101,7 +101,7 @@ export default function Flashcard() {
                           alignItems: "center",
                           padding: 2,
                           boxSizing: "border-box",
-                          backgroundColor: "white",
+                          backgroundColor: "transparent",
                         }}
                       >
                         <Typography variant="h5" component="div">
@@ -119,7 +119,7 @@ export default function Flashcard() {
                           alignItems: "center",
                           padding: 2,
                           boxSizing: "border-box",
-                          backgroundColor: "white",
+                          backgroundColor: "transparent",
                           transform: "rotateY(180deg)",
                         }}
                       >
